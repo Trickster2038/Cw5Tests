@@ -15,7 +15,7 @@ def browser():
     browser = webdriver.Chrome(executable_path="./chromedriver", \
         options=chrome_options)
     try:
-        browser.get("http://localhost:8000/")
+        browser.get("http://127.0.0.1:8000/")
         browser.implicitly_wait(10) # set wait for elemnts load if it is needed
         browser.maximize_window() # all tabs are on the screen
         login_btn = browser.find_element(*locators.LOGIN_BTN_LOCATOR)
