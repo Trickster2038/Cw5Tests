@@ -1,7 +1,12 @@
 from selenium import webdriver
 import locators
 import pytest
+from testdb import  init_test_db
 from selenium.common.exceptions import ElementClickInterceptedException
+
+@pytest.fixture(scope='function', autouse=True)
+def init_db():
+    init_test_db()
 
 @pytest.fixture(scope='function', autouse=True)
 def browser():
