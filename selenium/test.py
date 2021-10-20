@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 import locators
 import time
 import pytest
@@ -11,9 +12,16 @@ def click_card_btn(browser, tab_locator, btn_locator):
     tab.click()
     btn = browser.find_element(*btn_locator)
     btn.click()
+    browser.implicitly_wait(0)
+    WebDriverWait(browser, 5).until_not(
+        EC.visibility_of_element_located(btn_locator)
+    )
     browser.refresh()
-    time.sleep(0.1)
+    WebDriverWait(browser, 3).until_not(
+        EC.presence_of_element_located(btn_locator)
+    )
     assert 0 == len(browser.find_elements(*btn_locator))
+    browser.implicitly_wait(10)
 
 
 @pytest.mark.skip("skip")
@@ -47,6 +55,7 @@ def test_tabs(browser, tab_locator, page_url):
 1 - add Aleksandr Petrov
 2 - delete him from friends
 """
+@pytest.mark.skip("skip")
 def test_accept_delete_friend(browser):
     browser.implicitly_wait(0.5)
     accept_btn_locator = (By.CSS_SELECTOR, """button[onclick="send_ajax(4, 'accept_incoming')"]""")
@@ -55,5 +64,18 @@ def test_accept_delete_friend(browser):
         """button[onclick="send_ajax(4, 'delete_friend')"]""")
     click_card_btn(browser, locators.TAB_FRIENDS_LOCATOR, delete_btn_locator)
 
-# def test_
 
+
+# @pytest.mark.skip("skip")
+@pytest.mark.parametrize(
+        'tab_locator, btn_onclick',
+        [
+            pytest.param(locators.TAB_OUT_LOCATOR, "send_ajax(1, 'delete_outgoing')"),
+            pytest.param(locators.TAB_IN_LOCATOR, "send_ajax(3, 'delete_incoming')"),
+            pytest.param(locators.TAB_SEARCH_LOCATOR, "send_ajax(7, 'send_subscribe_request')"),
+            pytest.param(locators.TAB_SAFESEARCH_LOCATOR, "send_ajax(5, 'send_subscribe_request')"),
+        ]
+    )
+def test_delete_or_subscribe_cards(browser, tab_locator, btn_onclick):
+    btn_locator = (By.CSS_SELECTOR, f"""button[onclick="{btn_onclick}"]""")
+    click_card_btn(browser, tab_locator, btn_locator)
