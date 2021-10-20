@@ -49,10 +49,11 @@ def test_tabs(browser, tab_locator, page_url):
 """
 def test_accept_delete_friend(browser):
     browser.implicitly_wait(0.5)
-    accept_btn_locator = (By.CSS_SELECTOR, """button[onclick="send_ajax(3, 'accept_incoming')"]""")
+    accept_btn_locator = (By.CSS_SELECTOR, """button[onclick="send_ajax(4, 'accept_incoming')"]""")
     click_card_btn(browser, locators.TAB_IN_LOCATOR, accept_btn_locator)
     delete_btn_locator = (By.CSS_SELECTOR, \
-        """button[onclick="send_ajax(3, 'delete_friend')"]""")
+        """button[onclick="send_ajax(4, 'delete_friend')"]""")
     click_card_btn(browser, locators.TAB_FRIENDS_LOCATOR, delete_btn_locator)
-    time.sleep(3)
+
+# def test_
 

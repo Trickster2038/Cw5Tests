@@ -6,6 +6,7 @@ from selenium.common.exceptions import ElementClickInterceptedException
 
 @pytest.fixture(scope='function', autouse=True)
 def init_db():
+    # print('init DB')
     init_test_db()
 
 @pytest.fixture(scope='function', autouse=True)
