@@ -66,7 +66,7 @@ def test_accept_delete_friend(browser):
 
 
 
-# @pytest.mark.skip("skip")
+@pytest.mark.skip("skip")
 @pytest.mark.parametrize(
         'tab_locator, btn_onclick',
         [
@@ -79,3 +79,27 @@ def test_accept_delete_friend(browser):
 def test_delete_or_subscribe_cards(browser, tab_locator, btn_onclick):
     btn_locator = (By.CSS_SELECTOR, f"""button[onclick="{btn_onclick}"]""")
     click_card_btn(browser, tab_locator, btn_locator)
+
+# //*[@id="card-1"]//p[5]
+# send_ajax(1, 'confirm_moderation')
+@pytest.mark.parametrize(
+        'btn_onclick, status',
+        [
+            pytest.param("send_ajax(1, 'confirm_moderation')", "проверен"),
+            pytest.param("send_ajax(1, 'discard_moderation')", "не проверен"),
+        ]
+    )
+def test_moderate(browser, btn_onclick, status):
+    tab_out = browser.find_element(*locators.TAB_OUT_LOCATOR)
+    tab_out.click()
+    moder_status = browser.find_element(By.XPATH, """//*[@id="card-1"]//p[5]""")
+    assert moder_status.text.lower().count("на проверке") == 1
+    tab_moderate = browser.find_element(*locators.TAB_MODERATE_LOCATOR)
+    tab_moderate.click()
+    btn_locator = (By.CSS_SELECTOR, f"""button[onclick="{btn_onclick}"]""")
+    btn = browser.find_element(*btn_locator)
+    btn.click()
+    tab_out = browser.find_element(*locators.TAB_OUT_LOCATOR)
+    tab_out.click()
+    moder_status = browser.find_element(By.XPATH, """//*[@id="card-1"]//p[5]""")
+    assert moder_status.text.lower().count(status) == 1
