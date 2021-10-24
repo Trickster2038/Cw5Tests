@@ -12,4 +12,8 @@ TAB_FRIENDS_LOCATOR = (By.CSS_SELECTOR, 'a[href="/friends/"]')
 TAB_SEARCH_LOCATOR = (By.CSS_SELECTOR, 'a[href="/search?safe=false"]')
 TAB_SAFESEARCH_LOCATOR = (By.CSS_SELECTOR, 'a[href="/search?safe=true"]')
 TAB_MODERATE_LOCATOR = (By.CSS_SELECTOR, 'a[href="/moderate/"]')
-# a[href="/search?safe=true"]
+
+NAV_ACCOUNT_LOCATOR = (By.CSS_SELECTOR, 'a[href="/profile/"')
+PROFILE_CURATOR_CHECKBOX = (By.ID, 'curator-checkbox')
+PROFILE_CURATOR_BTN = (By.CSS_SELECTOR, 'a[href="/switchCurator/"')
+# .card > * > * > input[type="checkbox"]
