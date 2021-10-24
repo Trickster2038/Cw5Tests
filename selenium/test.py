@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 import locators
 import time
 import pytest
+import os
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -113,3 +114,26 @@ def test_switch_mode(browser: WebDriver):
     switch_mode_btn.click()
     curator_checkbox = browser.find_element(*locators.PROFILE_CURATOR_CHECKBOX)
     assert not checkbox_prev_state == curator_checkbox.is_selected()
+
+@pytest.mark.parametrize(
+        'form_btn_locator, status',
+        [
+            pytest.param(locators.PROFILE_AVATAR_BTN, "не проверен"),
+            pytest.param(locators.PROFILE_VERIFY_PHOTO_BTN, "на проверке"),
+        ]
+    )
+def test_photo_upload(browser: WebDriver, form_btn_locator, status):
+    nav_account = browser.find_element(*locators.NAV_ACCOUNT_LOCATOR)
+    nav_account.click()
+    moder_status = browser.find_element(*locators.PROFILE_MODERATION_STATUS)
+    assert moder_status.text.lower().count("проверен") == 1
+    avatar_btn = browser.find_element(*form_btn_locator)
+    avatar_btn.click()
+    file_input = browser.find_element(*locators.FILE_INPUT)
+    file_input.send_keys(os.path.abspath("./media/upload.png"))
+    submit_btn = browser.find_element(*locators.SUBMIT_BTN)
+    submit_btn.click()
+    moder_status = browser.find_element(*locators.PROFILE_MODERATION_STATUS)
+    assert moder_status.text.lower().count(status) == 1
+
+    
