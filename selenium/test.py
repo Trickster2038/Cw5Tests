@@ -7,6 +7,7 @@ import os
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
 def click_card_btn(browser: WebDriver, tab_locator, btn_locator):
     tab = browser.find_element(*tab_locator)
@@ -115,6 +116,7 @@ def test_switch_mode(browser: WebDriver):
     curator_checkbox = browser.find_element(*locators.PROFILE_CURATOR_CHECKBOX)
     assert not checkbox_prev_state == curator_checkbox.is_selected()
 
+@pytest.mark.skip("skip")
 @pytest.mark.parametrize(
         'form_btn_locator, status',
         [
@@ -136,4 +138,29 @@ def test_photo_upload(browser: WebDriver, form_btn_locator, status):
     moder_status = browser.find_element(*locators.PROFILE_MODERATION_STATUS)
     assert moder_status.text.lower().count(status) == 1
 
-    
+@pytest.mark.parametrize(
+        'course, bio',
+        [
+            pytest.param("1", "bio text"),
+            pytest.param("2", "bio 2"),
+            pytest.param("4", "lorem ipsum"),
+        ]
+    )
+def test_edit_account(browser: WebDriver, course, bio):
+    nav_account = browser.find_element(*locators.NAV_ACCOUNT_LOCATOR)
+    nav_account.click()
+    edit_btn = browser.find_element(*locators.PROFILE_EDIT_BTN)
+    edit_btn.click()
+    bio_field = browser.find_element(*locators.EDIT_BIO_FIELD)
+    bio_field.send_keys(bio)
+    course_field = browser.find_element(*locators.EDIT_COURSE_FIELD)
+    select_course = Select(course_field)
+    select_course.select_by_value(course)
+    submit_btn = browser.find_element(*locators.SUBMIT_BTN)
+    submit_btn.click()
+    moder_status = browser.find_element(*locators.PROFILE_MODERATION_STATUS)
+    assert course == '2' or moder_status.text.lower().count("не проверен") == 1
+    current_course = browser.find_element(*locators.PROFILE_COURSE)
+    assert current_course.text.lower().count(course) == 1
+    current_bio = browser.find_element(*locators.PROFILE_BIO)
+    assert current_bio.text.lower().count(bio) == 1
