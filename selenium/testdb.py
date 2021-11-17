@@ -22,24 +22,24 @@ def fillFaculties(cur):
     cur.execute("INSERT into beta_facultiest values (4, 'РЛ', 11)")
 def mockDB(cur):
     # unfilled outgoing
-    cur.execute("INSERT into beta_persont values (0, 'Unfilled', 'Фролов', 1, 2,    '0 биография lorem ipsum lorem ipsum lorem ipsum',    false, 0, 0, 'uname0', 2, 1, true, false)")
+    cur.execute("INSERT into beta_persont values (0, 'Unfilled', 'Фролов', 1, 4,    'биография Ф. - Lorem ipsum dolor sit amet',    false, 0, 0, 'uname0', 2, 1, true, false)")
     
     # outgoing:
-    cur.execute("INSERT into beta_persont values (1, 'Даниил', 'Иванов', 1, 2,    '1 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname1', 2, 1, false, false)")
-    cur.execute("INSERT into beta_persont values (2, 'Михаил', 'Иванов', 1, 2,    '2 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname2', 2, 1, false, false)")
+    cur.execute("INSERT into beta_persont values (1, 'Даниил', 'Иванов', 1, 4,    'биография Д.И. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname1', 2, 1, false, false)")
+    cur.execute("INSERT into beta_persont values (2, 'Михаил', 'Иванов', 1, 4,    'биография М.И. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname2', 2, 1, false, false)")
     
     #incoming
-    cur.execute("INSERT into beta_persont values (3, 'Александр', 'Петров', 1, 2,    '3 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname3', 2, 1, false, false)")
-    cur.execute("INSERT into beta_persont values (4, 'Анна', 'Петрова', 1, 2,    '4 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname4', 2, 1, true, false)")
+    cur.execute("INSERT into beta_persont values (3, 'Александр', 'Петров', 1, 2,    'биография А.П. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname3', 2, 1, false, false)")
+    cur.execute("INSERT into beta_persont values (4, 'Анна', 'Петрова', 1, 1,    'биография А.П. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname4', 2, 1, true, false)")
     
     #friends safe
-    cur.execute("INSERT into beta_persont values (5, 'Николай', 'Тихомиров', 1, 3,    '5 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname5', 2, 2, false, true)")
-    cur.execute("INSERT into beta_persont values (6, 'Дмитрий', 'Тихомиров', 1, 3,    '6 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname6', 2, 2, true, true)")
+    cur.execute("INSERT into beta_persont values (5, 'Николай', 'Тихомиров', 1, 4,    'биография Н.Т. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname5', 2, 2, false, true)")
+    cur.execute("INSERT into beta_persont values (6, 'Дмитрий', 'Тихомиров', 1, 4,    'биография Д.Т. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname6', 2, 2, true, true)")
     
     #friends unsafe
-    cur.execute("INSERT into beta_persont values (7, 'Виола', 'Сидорова', 1, 4,    '7 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'uname7', 2, 1, false, true)")    
+    cur.execute("INSERT into beta_persont values (7, 'Виола', 'Сидорова', 1, 4,    'биография В.С. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname7', 2, 1, false, true)")    
     
-    cur.execute("INSERT into beta_persont values (421423205, 'Астахов', 'Сергей', 1, 2,    '8 биография lorem ipsum lorem ipsum lorem ipsum',    true, 0, 0, 'trickster2038', 2, 2, true, false)")
+    cur.execute("INSERT into beta_persont values (421423205, 'Астахов', 'Сергей', 1, 3,    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',    true, 0, 0, 'trickster2038', 2, 2, true, false)")
     cur.execute("INSERT into beta_friendst values (0, 421423205, 1, false)")
     cur.execute("INSERT into beta_friendst values (1, 421423205, 2, false)")
     cur.execute("INSERT into beta_friendst values (2, 3, 421423205, false)")
