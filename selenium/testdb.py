@@ -39,7 +39,7 @@ def mockDB(cur):
     #friends unsafe
     cur.execute("INSERT into beta_persont values (7, 'Виола', 'Сидорова', 1, 4,    'биография В.С. - Lorem ipsum dolor sit amet',    true, 0, 0, 'uname7', 2, 1, false, true)")    
     
-    cur.execute("INSERT into beta_persont values (421423205, 'Астахов', 'Сергей', 1, 3,    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',    true, 0, 0, 'trickster2038', 2, 2, true, false)")
+    cur.execute("INSERT into beta_persont values (421423205, 'Иван', 'Иванов', 1, 3,    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',    true, 0, 0, 'trickster2038', 2, 2, true, false)")
     cur.execute("INSERT into beta_friendst values (0, 421423205, 1, false)")
     cur.execute("INSERT into beta_friendst values (1, 421423205, 2, false)")
     cur.execute("INSERT into beta_friendst values (2, 3, 421423205, false)")
