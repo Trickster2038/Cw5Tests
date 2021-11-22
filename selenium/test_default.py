@@ -29,6 +29,20 @@ def click_card_btn(browser: WebDriver, tab_locator, btn_locator):
 def test_login(browser: WebDriver):
     assert len(browser.find_elements(*locators.LOGOUT_BTN_LOCATOR)) != 0
 
+@pytest.mark.negative
+def test_login_negative(browser: WebDriver):
+    logout_btn = browser.find_element(*locators.LOGOUT_BTN_LOCATOR)
+    logout_btn.click()
+    login_btn = browser.find_element(*locators.LOGIN_BTN_LOCATOR)
+    login_btn.click()
+    id_field = browser.find_element(*locators.LOGIN_ID_FIELD_LOCATOR)
+    id_field.send_keys("fake")
+    pass_field = browser.find_element(*locators.PASSWORD_FIELD_LOCATOR)
+    pass_field.send_keys("fake")
+    login_btn = browser.find_element(*locators.LOGIN_FORM_BTN_LOCATOR)
+    login_btn.click()
+    assert browser.current_url.count("login") != 0
+
 def test_logout(browser: WebDriver):
     logout_btn = browser.find_element(*locators.LOGOUT_BTN_LOCATOR)
     logout_btn.click()
@@ -128,6 +142,23 @@ def test_photo_upload(browser: WebDriver, form_btn_locator, status):
     moder_status = browser.find_element(*locators.PROFILE_MODERATION_STATUS)
     assert moder_status.text.lower().count(status) == 1
 
+@pytest.mark.negative
+@pytest.mark.parametrize(
+        'form_btn_locator, relative_url',
+        [
+            pytest.param(locators.PROFILE_AVATAR_BTN, "avatar"),
+            pytest.param(locators.PROFILE_VERIFY_PHOTO_BTN, "verify"),
+        ]
+    )
+def test_photo_upload_negative(browser: WebDriver, form_btn_locator, relative_url):
+    nav_account = browser.find_element(*locators.NAV_ACCOUNT_LOCATOR)
+    nav_account.click()
+    avatar_btn = browser.find_element(*form_btn_locator)
+    avatar_btn.click()
+    submit_btn = browser.find_element(*locators.SUBMIT_BTN)
+    submit_btn.click()
+    assert browser.current_url.count(relative_url) != 0
+
 @pytest.mark.parametrize(
         'course, bio',
         [
@@ -155,7 +186,15 @@ def test_edit_account(browser: WebDriver, course, bio):
     current_bio = browser.find_element(*locators.PROFILE_BIO)
     assert current_bio.text.lower().count(bio) == 1
 
-
+@pytest.mark.negative
+def test_edit_account_negative(browser: WebDriver):
+    nav_account = browser.find_element(*locators.NAV_ACCOUNT_LOCATOR)
+    nav_account.click()
+    edit_btn = browser.find_element(*locators.PROFILE_EDIT_BTN)
+    edit_btn.click()
+    submit_btn = browser.find_element(*locators.SUBMIT_BTN)
+    submit_btn.click()
+    assert browser.current_url.count("edit") != 0
 
 # def test_locale(browser: WebDriver):
 #     time.sleep(3)
